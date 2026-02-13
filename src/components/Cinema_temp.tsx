@@ -1,75 +1,53 @@
-import { useRef, useEffect } from "react";
-import gsap from "gsap";
+import { useRef, useEffect, useState } from "react";
 
-interface CinemaProps {
-  onEnd: () => void;
-}
-
-const Cinema = ({ onEnd }: CinemaProps) => {
-  const containerRef = useRef<HTMLDivElement>(null);
+export const Cinema = ({ onComplete }: { onComplete: () => void }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
-    gsap.fromTo(
-      containerRef.current,
-      { opacity: 0 },
-      { opacity: 1, duration: 0.8, ease: "power2.out" }
-    );
+    // Ta funkcja odpala się od razu jak komponent wskoczy na ekran
+    const playVideo = async () => {
+      if (videoRef.current) {
+        try {
+          // Resetujemy czas na wszelki wypadek
+          videoRef.current.currentTime = 0;
+          // Próbujemy odpalić
+          await videoRef.current.play();
+        } catch (err) {
+          console.error("Autoplay failed:", err);
+          // Jeśli przeglądarka zablokuje, tutaj byśmy pokazali przycisk "Napraw",
+          // ale skoro mówisz, że user już klikał wcześniej, to powinno pójść.
+        }
+      }
+    };
 
-    // Auto-play video & audio
-    videoRef.current?.play().catch(() => {});
-    audioRef.current?.play().catch(() => {});
+    playVideo();
   }, []);
 
   const handleVideoEnd = () => {
-    audioRef.current?.pause();
-    gsap.to(containerRef.current, {
-      opacity: 0,
-      duration: 1.2,
-      ease: "power2.inOut",
-      onComplete: onEnd,
-    });
+    if (onComplete) onComplete();
   };
 
   return (
-    <div
-      ref={containerRef}
-      className="fixed inset-0 z-20 bg-background flex items-center justify-center"
-    >
+    <div className="fixed inset-0 z-20 bg-background flex items-center justify-center bg-black">
       <video
         ref={videoRef}
         onEnded={handleVideoEnd}
         playsInline
-        muted={false}
+        // Dodaj autoPlay, to pomaga przeglądarce zrozumieć intencje
+        autoPlay 
         className="w-full h-full object-cover"
         src="/videos/WITH_SONG.mp4"
       >
         Your browser does not support video.
       </video>
 
-      <audio ref={audioRef} src="" loop={false} />
-
-      {/* Placeholder overlay when no video src */}
-      {/*<div className="absolute inset-0 flex items-center justify-center bg-background/80 backdrop-blur-sm">*/}
-      {/*  <div className="text-center">*/}
-      {/*    <p className="text-4xl mb-4">🎬</p>*/}
-      {/*    <p className="text-xl text-secondary italic">*/}
-      {/*      Video placeholder*/}
-      {/*    </p>*/}
-      {/*    <p className="text-muted-foreground mt-2">*/}
-      {/*      Dodaj plik wideo i audio aby zobaczyć kino miłości*/}
-      {/*    </p>*/}
-      {/*    <button*/}
-      {/*      onClick={handleVideoEnd}*/}
-      {/*      className="mt-6 px-6 py-2 rounded-full bg-primary text-primary-foreground text-sm hover:brightness-110 transition-all"*/}
-      {/*    >*/}
-      {/*      Pomiń → List miłosny*/}
-      {/*    </button>*/}
-      {/*  </div>*/}
-      {/*</div>*/}
+      {/* Opcjonalnie: Przycisk awaryjny, gdyby jednak coś nie odpaliło */}
+      <button
+         onClick={() => videoRef.current?.play()}
+         className="absolute top-4 right-4 text-white/10 hover:text-white z-50 p-4"
+      >
+         ⟳
+      </button>
     </div>
   );
 };
-
-export default Cinema;
