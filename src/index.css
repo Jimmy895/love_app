@@ -1,0 +1,108 @@
+/*@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap');*/
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 340 60% 14%;
+    --foreground: 340 20% 95%;
+
+    --card: 340 50% 20%;
+    --card-foreground: 340 20% 95%;
+
+    --popover: 340 50% 20%;
+    --popover-foreground: 340 20% 95%;
+
+    --primary: 340 90% 65%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 330 80% 80%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 340 35% 22%;
+    --muted-foreground: 340 30% 70%;
+
+    --accent: 330 100% 85%;
+    --accent-foreground: 340 80% 10%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 340 45% 30%;
+    --input: 340 45% 30%;
+    --ring: 340 90% 65%;
+
+    --radius: 0.5rem;
+
+    --love-deep: 340 75% 40%;
+    --love-crimson: 340 90% 65%;
+    --love-pink: 330 100% 90%;
+    --love-hotpink: 330 100% 78%;
+    --love-gradient: linear-gradient(135deg, hsl(340 75% 40%), hsl(340 90% 65%), hsl(330 100% 78%));
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><text y='18' font-size='18'>💖</text></svg>") 12 12, auto;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Dancing Script', cursive;
+  }
+
+  button, a, [role="button"] {
+    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'><text y='22' font-size='22'>💕</text></svg>") 14 14, pointer;
+  }
+}
+
+@layer utilities {
+  .font-love {
+    font-family: 'Dancing Script', cursive;
+  }
+
+  .font-decorative {
+    font-family: 'Pinyon Script', cursive;
+  }
+  
+  .font-elegant {
+    font-family: 'Playfair Display', serif;
+  }
+  
+  .text-glow {
+    text-shadow: 0 0 20px hsl(340 90% 65% / 0.5), 0 0 40px hsl(330 100% 78% / 0.3);
+  }
+  
+  .text-glow-strong {
+    text-shadow: 0 0 10px hsl(340 90% 65% / 0.8), 0 0 30px hsl(330 100% 78% / 0.5), 0 0 60px hsl(340 75% 40% / 0.3);
+  }
+
+  .animated-bg {
+    background: linear-gradient(-45deg, 
+      hsl(340 60% 14%), 
+      hsl(340 70% 20%), 
+      hsl(330 55% 18%), 
+      hsl(350 65% 16%),
+      hsl(320 50% 15%)
+    );
+    background-size: 400% 400%;
+    animation: gradient-shift 15s ease infinite;
+  }
+
+  @keyframes gradient-shift {
+    0% { background-position: 0% 50%; }
+    25% { background-position: 100% 0%; }
+    50% { background-position: 100% 100%; }
+    75% { background-position: 0% 100%; }
+    100% { background-position: 0% 50%; }
+  }
+}
