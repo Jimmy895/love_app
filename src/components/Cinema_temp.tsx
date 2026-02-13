@@ -43,7 +43,7 @@ const Cinema = ({ onEnd }: CinemaProps) => {
         playsInline
         muted={false}
         className="w-full h-full object-cover"
-        src="/videos/WITH_MUSIC.mp4"
+        src="/videos/test.mp4"
       >
         Your browser does not support video.
       </video>
