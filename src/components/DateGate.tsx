@@ -5,7 +5,7 @@ interface DateGateProps {
   onCorrect: () => void;
 }
 
-const CORRECT_DATE = "2025-07-12";
+const CORRECT_DATE = "2011-04-25";
 
 const DateGate = ({ onCorrect }: DateGateProps) => {
   const [value, setValue] = useState("");
